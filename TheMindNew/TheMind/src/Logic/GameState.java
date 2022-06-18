@@ -1,0 +1,16 @@
+package Logic;
+
+public enum GameState {
+    WAITING_FOR_START,
+    ONGOING,
+    WAITNG_FOR_VOTE,
+
+    WAITING_FOR_CAPACITY,
+    WAITING_FOR_GAME_NAME,
+    WAITING_TO_SET_GAME_NAME
+
+
+
+
+}
+
