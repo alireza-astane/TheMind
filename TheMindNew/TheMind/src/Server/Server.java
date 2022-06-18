@@ -78,6 +78,7 @@ public class Server {
             games.add(game);
             new ServerMessenger(socket).request("You are the host of a new Game, so please enter the name of your game");
 //            game.setName();
+            // game.setCapacity();
             // todo get name from client and then set to game.
             gameToClientHandlerHashMap.put(game, new ArrayList<ClientHandler>());
             gameToClientHandlerHashMap.get(game).add(clientHandler);
