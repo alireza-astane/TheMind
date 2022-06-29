@@ -1,0 +1,23 @@
+package server;
+
+public enum MessageType {
+    GAME_NAME,
+    GAME_CAPACITY,
+    GAME_NAME_SET,
+    GAME_CAPACITY_SET,
+    ORDER,
+    CHOOSE_TARGET,
+    PLAYER_LIST,
+    CARD_LIST,
+    EMOJI_LIST,
+    PLAY,
+    LOST_CARD,
+    NINJA_REQUEST,
+    NEXT_LEVEL,
+    GAME_OVER,
+    PLAYER_LEAVE,
+    PLAYER_ENTER,
+    GAME_START,
+    WRONG_VALUE
+
+}
