@@ -21,6 +21,10 @@ public class Game {
     protected int throwingStars=2;
     protected int level=1;
 
+    protected ArrayList<Player> humans = new ArrayList<>();
+
+    protected ArrayList<Player> bots = new ArrayList<>();
+
     protected HashMap<Player,Integer> idByPlayer = new HashMap<>();
 
     protected HashMap<Integer,Player> playerById = new HashMap<>();
@@ -106,6 +110,7 @@ public class Game {
                     else{
                         result=Result.CORRECT_NEXTLEVEL;
                         this.level++;
+                        reward();
                         this.giveHands();
                     }
                 }
@@ -144,6 +149,7 @@ public class Game {
                         else{
                             result=Result.WRONG_NEXTLEVEL;
                             this.level++;
+                            reward();
                             this.giveHands();
                         }
                     }
@@ -193,6 +199,7 @@ public class Game {
             else{
                 result=Result.THROWINGSTAR_NEXTLEVEL;
                 this.level++;
+                reward();
                 this.giveHands();
             }
         }
@@ -216,6 +223,10 @@ public class Game {
         this.playerById.put(player.id,player);
         this.idByPlayer.put(player,player.id);
         this.Players.add(player);
+        if(player.playerType==PlayerType.BOT){
+            this.bots.add(player);
+        }
+        else{this.humans.add(player);}
     }
 
     public void replacePlayer(Player newPlayer,Player oldPlayer){
@@ -224,6 +235,10 @@ public class Game {
         this.idByPlayer.remove(oldPlayer);
         this.Players.remove(oldPlayer);
         this.addPlayer(newPlayer);
+        if(oldPlayer.playerType==PlayerType.HUMAN){
+            this.humans.remove(oldPlayer);
+        }
+        else{this.bots.remove(oldPlayer);}
 
     }
     //setters and getters
@@ -267,6 +282,46 @@ public class Game {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public ArrayList<Player> getBots() {
+        return bots;
+    }
+
+    public ArrayList<Player> getHumans() {
+        return humans;
+    }
+
+    public HashMap<Integer, Player> getPlayerById() {
+        return playerById;
+    }
+
+    public HashMap<Player, Integer> getIdByPlayer() {
+        return idByPlayer;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setBots(ArrayList<Player> bots) {
+        this.bots = bots;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public void setHumans(ArrayList<Player> humans) {
+        this.humans = humans;
+    }
+
+    public void setIdByPlayer(HashMap<Player, Integer> idByPlayer) {
+        this.idByPlayer = idByPlayer;
+    }
+
+    public void setPlayerById(HashMap<Integer, Player> playerById) {
+        this.playerById = playerById;
     }
 
     public void setCapacity(int capacity) {
