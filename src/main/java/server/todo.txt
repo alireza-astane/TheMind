@@ -1,0 +1,11 @@
+1.
+    گزینه خروج -- > بات بسازه --> replace
+2.
+    یه تابع میخوتایم چک کنه که بازین رفته بیرون یا نه
+    https://www.alpharithms.com/detecting-client-disconnections-java-sockets-091416/
+3.
+    level++ reward.
+
+4.
+    درست میشه توی اد پلیر اضافه بشه به human
+    من باید درست کنم vot رو روی human
