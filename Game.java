@@ -8,14 +8,14 @@ public class Game {
         for(int i=1;i<101;i++){this.totalCards.add(i);}
         Collections.shuffle(this.totalCards);
     }
-    protected int counter=1;
+    protected int counter=0;
     int lastPlayedCard;
     protected ArrayList<Integer> totalCards;
-    protected ArrayList<Integer> playedCards;
-    protected ArrayList<Integer> correctCords;
+    protected ArrayList<Integer> playedCards = new ArrayList<>();
+    protected ArrayList<Integer> correctCords = new ArrayList<>();
     protected GameState gameState;
     protected int capacity;
-    protected ArrayList<Player>  Players;
+    protected ArrayList<Player>  players;
     protected GameData gameData;
     protected int lives;
     protected int throwingStars=2;
@@ -28,6 +28,37 @@ public class Game {
     protected HashMap<Player,Integer> idByPlayer = new HashMap<>();
 
     protected HashMap<Integer,Player> playerById = new HashMap<>();
+
+    protected HashMap<Integer, Boolean> playerVoteResult;
+
+    protected Boolean voteResult;
+
+    public void startVote(int id) {
+        voteResult = null;
+        playerVoteResult = new HashMap<>();
+        for (Player player : players) {
+            playerVoteResult.put(player.getId(), null);
+        }
+        playerVoteResult.put(id, true);
+    }
+
+    public void setResult(int id, Boolean result) {
+        if (result)
+            playerVoteResult.put(id, true);
+        else {
+            voteResult = false;
+        }
+        if (checkAllPlayerAgree())
+            voteResult = true;
+    }
+
+    protected Boolean checkAllPlayerAgree() {
+        for (Boolean result : playerVoteResult.values()) {
+            if (!result)
+                return false;
+        }
+        return true;
+    }
 
     public void update(){
         this.gameData=GameData.getGameData(this);
@@ -123,7 +154,7 @@ public class Game {
                 if(this.lives>0){
                     this.lives--;
                     hashMap = new HashMap<>();
-                    for(Player p:this.Players){
+                    for(Player p:this.players){
                         ArrayList<Integer> arrayList = new ArrayList<>();
                         for(Integer c:p.hand){
                             if(c<card){
@@ -178,7 +209,7 @@ public class Game {
         Result result = null;
         ArrayList<Integer> list = new ArrayList<>();
         HashMap<Integer,ArrayList<Integer>> hashMap = new HashMap<>();
-        for(Player player:this.Players){
+        for(Player player:this.players){
             try{
             int card = player.getHand().get(0);
             hashMap.put(player.id,new ArrayList<>(List.of(card)));
@@ -222,7 +253,7 @@ public class Game {
         counter++;
         this.playerById.put(player.id,player);
         this.idByPlayer.put(player,player.id);
-        this.Players.add(player);
+        this.players.add(player);
         if(player.playerType==PlayerType.BOT){
             this.bots.add(player);
         }
@@ -233,7 +264,7 @@ public class Game {
         newPlayer.hand=oldPlayer.hand;
         this.playerById.remove(oldPlayer.id);
         this.idByPlayer.remove(oldPlayer);
-        this.Players.remove(oldPlayer);
+        this.players.remove(oldPlayer);
         this.addPlayer(newPlayer);
         if(oldPlayer.playerType==PlayerType.HUMAN){
             this.humans.remove(oldPlayer);
@@ -269,7 +300,7 @@ public class Game {
     }
 
     public ArrayList<Player> getPlayers() {
-        return Players;
+        return players;
     }
 
     public ArrayList<Integer> getPlayedCards() {
@@ -358,7 +389,7 @@ public class Game {
     }
 
     public void setPlayers(ArrayList<Player> players) {
-        Players = players;
+        players = players;
     }
 
     public void setThrowingStars(int throwingStars) {
@@ -369,4 +400,19 @@ public class Game {
         this.totalCards = totalCards;
     }
 
+    public Boolean getVoteResult() {
+        return voteResult;
+    }
+
+    public HashMap<Integer, Boolean> getPlayerVoteResult() {
+        return playerVoteResult;
+    }
+
+    public void setPlayerVoteResult(HashMap<Integer, Boolean> playerVoteResult) {
+        this.playerVoteResult = playerVoteResult;
+    }
+
+    public void setVoteResult(Boolean voteResult) {
+        this.voteResult = voteResult;
+    }
 }
