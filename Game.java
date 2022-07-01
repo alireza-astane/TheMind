@@ -8,6 +8,7 @@ public class Game {
         for(int i=1;i<101;i++){this.totalCards.add(i);}
         Collections.shuffle(this.totalCards);
     }
+    protected int counter=1;
     int lastPlayedCard;
     protected ArrayList<Integer> totalCards;
     protected ArrayList<Integer> playedCards;
@@ -164,8 +165,8 @@ public class Game {
         this.setGameState(GameState.ONGOING);
         return new ArrayList<Object>(Arrays.asList(result,hashMap));
     }
-    
-    
+
+
     public ArrayList<Object> doThrowingStar(){
         this.setGameState(GameState.WAITING);
         Result result = null;
@@ -210,17 +211,20 @@ public class Game {
     }
 
     public void addPlayer(Player player){
+        player.setId(counter);
+        counter++;
         this.playerById.put(player.id,player);
         this.idByPlayer.put(player,player.id);
         this.Players.add(player);
     }
 
     public void replacePlayer(Player newPlayer,Player oldPlayer){
-        this.addPlayer(newPlayer);
         newPlayer.hand=oldPlayer.hand;
         this.playerById.remove(oldPlayer.id);
         this.idByPlayer.remove(oldPlayer);
         this.Players.remove(oldPlayer);
+        this.addPlayer(newPlayer);
+
     }
     //setters and getters
 
